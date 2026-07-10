@@ -39,6 +39,9 @@
 #                                (default: "Are you there?")
 #   NOTIFY_DND_CHECK            "0" to skip the Focus/DND gate entirely
 #                                (default: "1")
+#   NOTIFY_IMMEDIATE_ENABLED    "0" to disable the initial "task done" /
+#                                "needs you" notification entirely
+#                                (default: "1")
 #   NOTIFY_NUDGE_ENABLED        "0" to disable the "are you there?"
 #                                follow-up entirely                 (default: "1")
 #
@@ -55,6 +58,7 @@ WAIT_NUDGE_THRESHOLD="${NOTIFY_WAIT_NUDGE_THRESHOLD:-60}"
 SOUND="${NOTIFY_SOUND:-Ping}"
 NUDGE_TEXT="${NOTIFY_NUDGE_TEXT:-Are you there?}"
 DND_CHECK_ENABLED="${NOTIFY_DND_CHECK:-1}"
+IMMEDIATE_ENABLED="${NOTIFY_IMMEDIATE_ENABLED:-1}"
 NUDGE_ENABLED="${NOTIFY_NUDGE_ENABLED:-1}"
 
 # ---- shared helpers (used by both hook mode and --watch mode) ----
@@ -238,24 +242,29 @@ if [ "$NUDGE_ENABLED" = "1" ] && [ -n "$SESSION_ID" ]; then
   disown 2>/dev/null || true
 fi
 
-if is_dnd_active; then
-  exit 0
-fi
+# The immediate "task done" / "needs you" check. Skipped entirely if
+# NOTIFY_IMMEDIATE_ENABLED=0 -- the nudge watcher spawned above (if enabled)
+# still runs independently, so you can run nudge-only if you want.
+if [ "$IMMEDIATE_ENABLED" = "1" ]; then
+  if is_dnd_active; then
+    exit 0
+  fi
 
-if [ "$(is_our_window_frontmost "$TERM_APP" "$OUR_TTY")" != "yes" ]; then
-  notify "$TITLE" "$SNIPPET" "$TERM_APP" "$BUNDLE_ID" "$OUR_TTY"
-  exit 0
-fi
+  if [ "$(is_our_window_frontmost "$TERM_APP" "$OUR_TTY")" != "yes" ]; then
+    notify "$TITLE" "$SNIPPET" "$TERM_APP" "$BUNDLE_ID" "$OUR_TTY"
+    exit 0
+  fi
 
-sleep "$IDLE_THRESHOLD"
+  sleep "$IDLE_THRESHOLD"
 
-if [ "$(is_our_window_frontmost "$TERM_APP" "$OUR_TTY")" != "yes" ]; then
-  notify "$TITLE" "$SNIPPET" "$TERM_APP" "$BUNDLE_ID" "$OUR_TTY"
-  exit 0
-fi
+  if [ "$(is_our_window_frontmost "$TERM_APP" "$OUR_TTY")" != "yes" ]; then
+    notify "$TITLE" "$SNIPPET" "$TERM_APP" "$BUNDLE_ID" "$OUR_TTY"
+    exit 0
+  fi
 
-idle=$(ioreg -c IOHIDSystem | awk '/HIDIdleTime/ {print int($NF/1000000000); exit}')
+  idle=$(ioreg -c IOHIDSystem | awk '/HIDIdleTime/ {print int($NF/1000000000); exit}')
 
-if [ "${idle:-0}" -ge "$IDLE_THRESHOLD" ]; then
-  notify "$TITLE" "$SNIPPET" "$TERM_APP" "$BUNDLE_ID" "$OUR_TTY"
+  if [ "${idle:-0}" -ge "$IDLE_THRESHOLD" ]; then
+    notify "$TITLE" "$SNIPPET" "$TERM_APP" "$BUNDLE_ID" "$OUR_TTY"
+  fi
 fi

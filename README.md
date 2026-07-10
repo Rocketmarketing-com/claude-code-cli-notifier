@@ -72,7 +72,12 @@ and edit it there — the script sources that file automatically if it exists.
 | `NOTIFY_SOUND` | `Ping` | Notification sound name (see `/System/Library/Sounds`, or `default`). |
 | `NOTIFY_NUDGE_TEXT` | `Are you there?` | Body text of the follow-up nudge. |
 | `NOTIFY_DND_CHECK` | `1` | Set to `0` to skip the Focus/Do Not Disturb gate entirely (always notify, even during Focus). |
+| `NOTIFY_IMMEDIATE_ENABLED` | `1` | Set to `0` to disable the initial "task done" / "needs you" notification entirely. |
 | `NOTIFY_NUDGE_ENABLED` | `1` | Set to `0` to disable the follow-up nudge entirely — only the one immediate notification. |
+
+Both notifications can be turned on and off independently — e.g. set
+`NOTIFY_IMMEDIATE_ENABLED=0` with `NOTIFY_NUDGE_ENABLED=1` to skip the first
+ping and only get notified if a prompt goes truly unanswered, or vice versa.
 
 ## Terminal app support
 

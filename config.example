@@ -26,6 +26,11 @@
 # during Focus). Requires Full Disk Access to actually engage — see README.
 # export NOTIFY_DND_CHECK=1
 
+# Set to 0 to disable the initial "task done" / "needs you" notification
+# entirely. The "are you there?" nudge (if enabled) still runs independently,
+# so you can go nudge-only if you want.
+# export NOTIFY_IMMEDIATE_ENABLED=1
+
 # Set to 0 to disable the "are you there?" follow-up nudge entirely — you'll
 # only ever get the one immediate notification, no second ping if a prompt
 # goes unanswered.
