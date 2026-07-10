@@ -1,0 +1,32 @@
+# claude-code-notifier config
+#
+# Copy this file to ~/.config/claude-code-notifier/config and uncomment /
+# edit whatever you want to change. Anything left commented out uses the
+# script's built-in default. Every setting here can also just be exported as
+# a plain environment variable instead — this file is entirely optional.
+
+# Seconds the terminal must sit unfocused/idle before the immediate
+# notification fires.
+# export NOTIFY_IDLE_THRESHOLD=15
+
+# Seconds to wait before the "are you there?" follow-up nudge fires, if a
+# question/permission prompt is still unanswered.
+# export NOTIFY_WAIT_NUDGE_THRESHOLD=60
+
+# Notification sound name. See /System/Library/Sounds for the built-in
+# options (Ping, Glass, Pop, Submarine, ...), or "default" for the system
+# default sound.
+# export NOTIFY_SOUND=Ping
+
+# Body text for the follow-up nudge.
+# export NOTIFY_NUDGE_TEXT="Are you there?"
+
+# Set to 0 to skip the Focus/Do Not Disturb check entirely (so you always
+# get notified even mid-Focus-mode). Default is 1 (check DND, stay silent
+# during Focus). Requires Full Disk Access to actually engage — see README.
+# export NOTIFY_DND_CHECK=1
+
+# Set to 0 to disable the "are you there?" follow-up nudge entirely — you'll
+# only ever get the one immediate notification, no second ping if a prompt
+# goes unanswered.
+# export NOTIFY_NUDGE_ENABLED=1

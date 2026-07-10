@@ -1,0 +1,47 @@
+{
+  "Stop": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/notify-if-away.sh 2>/dev/null || true",
+          "async": true
+        }
+      ]
+    }
+  ],
+  "Notification": [
+    {
+      "matcher": "permission_prompt",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/notify-if-away.sh 2>/dev/null || true",
+          "async": true
+        }
+      ]
+    }
+  ],
+  "UserPromptSubmit": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/notify-if-away.sh --clear 2>/dev/null || true",
+          "async": true
+        }
+      ]
+    }
+  ],
+  "PreToolUse": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "~/.claude/scripts/notify-if-away.sh --clear 2>/dev/null || true",
+          "async": true
+        }
+      ]
+    }
+  ]
+}
