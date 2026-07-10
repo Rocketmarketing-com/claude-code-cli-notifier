@@ -1,6 +1,6 @@
-# claude-code-notifier config
+# claude-code-cli-notifier config
 #
-# Copy this file to ~/.config/claude-code-notifier/config and uncomment /
+# Copy this file to ~/.config/claude-code-cli-notifier/config and uncomment /
 # edit whatever you want to change. Anything left commented out uses the
 # script's built-in default. Every setting here can also just be exported as
 # a plain environment variable instead — this file is entirely optional.

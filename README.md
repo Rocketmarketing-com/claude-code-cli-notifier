@@ -1,4 +1,4 @@
-# claude-code-notifier
+# claude-code-cli-notifier
 
 Desktop notifications for the [Claude Code](https://claude.com/claude-code)
 **CLI**, but only when you're actually not watching — no noise while you're
@@ -40,8 +40,8 @@ sitting there reading the terminal.
 ## Install
 
 ```bash
-git clone https://github.com/Rocketmarketing-com/claude-code-notifier.git
-cd claude-code-notifier
+git clone https://github.com/Rocketmarketing-com/claude-code-cli-notifier.git
+cd claude-code-cli-notifier
 ./install.sh
 ```
 
@@ -68,7 +68,7 @@ of your `~/.claude/settings.json`.
 ## Configuration
 
 Everything is controlled by environment variables. Set them directly, or copy
-[`config.example`](config.example) to `~/.config/claude-code-notifier/config`
+[`config.example`](config.example) to `~/.config/claude-code-cli-notifier/config`
 and edit it there — the script sources that file automatically if it exists.
 
 | Variable | Default | Purpose |

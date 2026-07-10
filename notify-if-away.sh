@@ -1,6 +1,6 @@
 #!/bin/bash
-# claude-code-notifier — desktop notifications for Claude Code, only when
-# you're actually not watching. https://github.com/Rocketmarketing-com/claude-code-notifier
+# claude-code-cli-notifier — desktop notifications for Claude Code, only when
+# you're actually not watching. https://github.com/Rocketmarketing-com/claude-code-cli-notifier
 #
 # macOS only: relies on osascript, ioreg, and (optionally) terminal-notifier,
 # none of which exist on Linux/Windows.
@@ -45,12 +45,12 @@
 #   NOTIFY_NUDGE_ENABLED        "0" to disable the "are you there?"
 #                                follow-up entirely                 (default: "1")
 #
-# Config file: if $HOME/.config/claude-code-notifier/config exists (or
+# Config file: if $HOME/.config/claude-code-cli-notifier/config exists (or
 # $NOTIFY_CONFIG_FILE points somewhere else), it's sourced before applying
 # defaults, so you can set the vars above there instead of exporting them in
 # your shell. See config.example in this repo.
 
-CONFIG_FILE="${NOTIFY_CONFIG_FILE:-$HOME/.config/claude-code-notifier/config}"
+CONFIG_FILE="${NOTIFY_CONFIG_FILE:-$HOME/.config/claude-code-cli-notifier/config}"
 [ -f "$CONFIG_FILE" ] && source "$CONFIG_FILE"
 
 IDLE_THRESHOLD="${NOTIFY_IDLE_THRESHOLD:-15}"

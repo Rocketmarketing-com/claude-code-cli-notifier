@@ -1,5 +1,5 @@
 #!/bin/bash
-# Installer for claude-code-notifier. Safe to re-run.
+# Installer for claude-code-cli-notifier. Safe to re-run.
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -7,7 +7,7 @@ SCRIPT_DEST="$HOME/.claude/scripts/notify-if-away.sh"
 SETTINGS="$HOME/.claude/settings.json"
 HOOKS_SNIPPET="$REPO_DIR/examples/hooks.json"
 
-echo "claude-code-notifier installer"
+echo "claude-code-cli-notifier installer"
 echo
 
 if [ "$(uname)" != "Darwin" ]; then
@@ -73,7 +73,7 @@ echo
 echo "Done. Start a new Claude Code session to pick up the hooks."
 echo
 echo "Optional next steps:"
-echo "  - Copy config.example to ~/.config/claude-code-notifier/config to customize"
+echo "  - Copy config.example to ~/.config/claude-code-cli-notifier/config to customize"
 echo "    thresholds, sound, or turn features off."
 echo "  - Grant your terminal app Full Disk Access (System Settings > Privacy &"
 echo "    Security > Full Disk Access) so the Do Not Disturb check can engage."
