@@ -1,8 +1,14 @@
 # claude-code-notifier
 
-Desktop notifications for [Claude Code](https://claude.com/claude-code), but
-only when you're actually not watching — no noise while you're sitting there
-reading the terminal.
+Desktop notifications for the [Claude Code](https://claude.com/claude-code)
+**CLI**, but only when you're actually not watching — no noise while you're
+sitting there reading the terminal.
+
+> **For the Claude Code CLI running in a terminal only.** Claude Code also
+> ships as a desktop app, a web app (claude.ai/code), and IDE extensions
+> (VS Code, JetBrains) — this tool doesn't apply to those. It works by
+> detecting whether a terminal window/tab is frontmost and idle, which only
+> means something for the CLI.
 
 > **macOS only.** This relies on `osascript`, `ioreg`, and macOS's Do Not
 > Disturb database, none of which exist on Linux or Windows. It will not
