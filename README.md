@@ -162,7 +162,11 @@ The script (`notify-if-away.sh`) runs as a Claude Code hook in three modes:
   reads the event JSON from stdin, decides whether to notify.
 - **`--watch`** — a detached background process, spawned by hook mode, that
   sleeps `NOTIFY_WAIT_NUDGE_THRESHOLD` seconds and fires the "Are you
-  there?" nudge if nothing has cancelled it.
+  there?" nudge if nothing has cancelled it. Since it's detached, it outlives
+  the session it was spawned for — it double-checks that a `claude` process
+  is still attached to your tty before nudging, so closing Claude (or the
+  whole terminal tab) before the threshold elapses is treated as "nothing to
+  nudge for" rather than firing a stale notification.
 - **`--clear`** — invoked by the `UserPromptSubmit` and `PreToolUse` hooks,
   cancels a pending nudge the instant you respond.
 

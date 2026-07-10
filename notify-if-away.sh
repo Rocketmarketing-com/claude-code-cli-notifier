@@ -21,7 +21,10 @@
 #   token each time this script runs in hook mode, lets a later event cancel
 #   a stale watcher: --clear (wired to UserPromptSubmit and PreToolUse)
 #   deletes the marker the moment you've clearly responded (typed a new
-#   message, or Claude resumed calling tools after your answer).
+#   message, or Claude resumed calling tools after your answer). The watcher
+#   is fully detached, so it outlives the session -- before nudging it also
+#   checks that a `claude` process is still attached to your tty, so closing
+#   Claude (or the whole terminal tab) doesn't leave a stale nudge to fire.
 #
 # Modes:
 #   (no args)   hook mode -- reads Stop/Notification JSON from stdin
@@ -119,6 +122,19 @@ is_our_window_frontmost() {
   echo yes
 }
 
+# True if a `claude` process is still attached to tty $1 (e.g. "/dev/ttys016").
+# Used only by --watch: its nudge fires up to WAIT_NUDGE_THRESHOLD seconds
+# late and is fully detached (nohup+disown), so it outlives the session --
+# closing Claude, or the whole terminal tab, doesn't kill it. Without this
+# check it would fire a stale "are you there?" for a session that's gone.
+# Fails open (unknown tty -> "alive") consistent with this script's general
+# bias toward notifying over silently suppressing.
+is_claude_alive() {
+  local tty="$1"
+  [ -z "$tty" ] && return 0
+  ps -t "${tty#/dev/}" -o comm= 2>/dev/null | grep -qx claude
+}
+
 # notify TITLE MESSAGE TERM_APP BUNDLE_ID OUR_TTY
 notify() {
   local title="$1" message="$2" term_app="$3" bundle_id="$4" our_tty="$5"
@@ -168,6 +184,8 @@ if [ "$1" = "--watch" ]; then
   # A newer wait period (this session's next Stop/Notification) or a --clear
   # (you responded) has since overwritten/removed the marker -> stale, skip.
   [ "$(cat "$MARKER" 2>/dev/null)" = "$TOKEN" ] || exit 0
+
+  is_claude_alive "$OUR_TTY" || exit 0
 
   is_dnd_active && exit 0
   [ "$(is_our_window_frontmost "$TERM_APP" "$OUR_TTY")" = "yes" ] && exit 0
